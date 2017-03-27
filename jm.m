@@ -24,6 +24,9 @@ graphMetrics(G);
 %% Visa flugor
 plotFlock(Q, G);
 
+%% Show response curves
+showResponseCurves();
+
 %% Tidsserie
 showTimeSeries(states, flashes, dt);
 
