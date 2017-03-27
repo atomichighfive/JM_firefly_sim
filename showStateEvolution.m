@@ -1,4 +1,4 @@
-function [ fig ] = showStateEvolution( states, dt )
+function [ fig ] = showStateEvolution( states, dt, render )
 %SHOWSTATEEVOLUTION Summary of this function goes here
 %   Detailed explanation goes here
     T = size(states,1);
@@ -22,7 +22,12 @@ function [ fig ] = showStateEvolution( states, dt )
         plot(states(t,:,6),'.');
         ylim([0,3]);
         xlim([0,size(states,2)+1])
-        pause(dt);
+        if render
+            drawnow;
+            print(['output/showStateEvolution/',num2str(t)], '-djpeg');
+        else
+            pause(dt);
+        end
         if ~ishandle(fig)
             break;
         end

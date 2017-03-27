@@ -8,13 +8,13 @@ connectionThreshold = 1.7;
 [Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
-Q(:,6) = 1+1*rand(N,1);
+Q(:,6) = 1+0.5*rand(N,1);
 
 graphMetrics(G);
 
 %% Simulate
-dt = 0.025;
-time = 10;
+dt = 0.005;
+time = 3;
 
 [states, flashes] = simulateFlock(Q, G, time, dt);
 
@@ -28,10 +28,10 @@ plotFlock(Q, G);
 showTimeSeries(states, flashes, dt);
 
 %% Tillståndsevolution
-showStateEvolution(states, dt);
+showStateEvolution(states, dt, false);
 
 %% Visa simulering
-showSimulation(states, flashes, dt);
+showSimulation(states, flashes, dt, false, false);
 
 %% Visa gammal ful simulering
 oldPlotBlob(states, flashes, dt);
