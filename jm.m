@@ -3,7 +3,7 @@ clear all;
 
 flockRadius = 4;
 flockDensity = 0.4;
-connectionThreshold = 1.7;
+connectionThreshold = 1.6;
 
 [Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
 N = size(Q, 1);
@@ -13,8 +13,8 @@ Q(:,6) = 1+0.5*rand(N,1);
 graphMetrics(G);
 
 %% Simulate
-dt = 0.005;
-time = 6;
+dt = 0.0025;
+time = 4;
 
 [states, flashes] = simulateFlock(Q, G, time, dt);
 
@@ -30,6 +30,17 @@ showResponseCurves();
 %% Tidsserie
 showTimeSeries(states, flashes, dt);
 
+%% Godhetstal
+I = ([-1;1]*[0.0075:0.0025:0.02])'; % Set up intervals to evaluate for
+legendStrings = strings(size(I,1),3); % Prepare for creating a plot legend
+for i=1:size(I,1)
+    S = calculateSynchrony(states, flashes, dt, I(i,:)); % Calculate for every interval
+    legendStrings(i,:) = ['tol = ', sprintf('%0.3f', diff(I(i,:))), 's']; % Append legend entry
+    plot(S); hold on; % Plot
+end
+ylim([0,1.05]);
+grid on;
+legend(legendStrings, 'Location', 'southeast'); % Draw legend
 %% Tillståndsevolution
 showStateEvolution(states, dt, 1, false);
 
@@ -46,6 +57,3 @@ plotFlyDetailed(states, flashes, dt, fly);
 yyaxis('left');
 ylim(1.1*ylim);
 grid on;
-
-%% Visa gammal ful simulering
-oldPlotBlob(states, flashes, dt);

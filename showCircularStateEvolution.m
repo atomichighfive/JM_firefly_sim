@@ -18,7 +18,7 @@ function [ fig ] = showCircularStateEvolution( states, dt, timescale, render )
         title(['T = ', num2str(t*dt,2)]);
         if render
             drawnow;
-            print(['output/showStateEvolution/',num2str(t)], '-djpeg');
+            print(['output/showCircularStateEvolution/',num2str(t)], '-djpeg');
         else
             pause(dt/timescale);
         end
