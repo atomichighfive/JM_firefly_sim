@@ -23,8 +23,6 @@ function [ states, flashes ] = simulateFlock( Q, G, time, dt )
                     Qn(flyIndex,6) = f;
                     if listening == 1;
                         flashes(end, flyIndex) = 1;
-                    else
-                        flashes(end, flyIndex) = -1;
                     end
                 end
                 Qn(i,5) = 0;

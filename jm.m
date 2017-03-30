@@ -36,12 +36,5 @@ showStateEvolution(states, dt, false);
 %% Visa simulering
 showSimulation(states, flashes, dt, false, false);
 
-%% Visa en flugas detalierade tillstånd
-fly = 1;
-plotFlyDetailed(states, flashes, dt, fly);
-yyaxis('left');
-ylim(1.1*ylim);
-grid on;
-
 %% Visa gammal ful simulering
 oldPlotBlob(states, flashes, dt);
