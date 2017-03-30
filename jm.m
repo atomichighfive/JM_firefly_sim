@@ -14,7 +14,7 @@ graphMetrics(G);
 
 %% Simulate
 dt = 0.005;
-time = 3;
+time = 6;
 
 [states, flashes] = simulateFlock(Q, G, time, dt);
 
@@ -31,12 +31,16 @@ showResponseCurves();
 showTimeSeries(states, flashes, dt);
 
 %% TillstÃ¥ndsevolution
-showStateEvolution(states, dt, false);
+showStateEvolution(states, dt, 1, false);
+
+%% Cirkulär tillståndsevolution
+showCircularStateEvolution(states, dt, 0.25, false);
 
 %% Visa simulering
 showSimulation(states, flashes, dt, false, false);
 
 %% Visa en flugas detalierade tillstånd
+figure()
 fly = 1;
 plotFlyDetailed(states, flashes, dt, fly);
 yyaxis('left');
