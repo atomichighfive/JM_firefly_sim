@@ -14,7 +14,7 @@ function [ S ] = calculateSynchrony( states, flashes, dt, I )
        for i=1:size(flashesNow,1)
            fly = flashesNow(i, end-1);
            flyPeriod = 1/(states(t,fly,6)*dt);
-           scores(t:t+floor(flyPeriod), fly) = size(flashesAround,1)-1;
+           scores(t:t+round(flyPeriod), fly) = size(flashesAround,1)-1;
        end
     end
     %imagesc(scores);

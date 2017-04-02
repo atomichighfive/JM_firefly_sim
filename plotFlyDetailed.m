@@ -1,4 +1,4 @@
-function [ handles ] = plotFlyDetailed( states, flashes, dt, oscilator )
+function [ handles ] = plotFlyDetailed( states, flashes, dt, oscilator, useLegend )
 %SHOW Summary of this function goes here
 %   Detailed explanation goes here
     seenFlashes = squeeze(flashes(:,[oscilator, end-1, end]));
@@ -41,6 +41,11 @@ function [ handles ] = plotFlyDetailed( states, flashes, dt, oscilator )
     handles(1) = stem(x,abs(y), 'Marker', 'none', 'Linewidth', 0.5, 'Color', 'black'); hold on;
     handles(2) = plot(selfx, selfy, 'k*');
     handles(3) = plot(t,p, '--');
+    ylim([0,1.1]);
     yyaxis('right');
     handles(4) = plot(t,f, '-.'); hold off;
+    yyaxis('left');
+    if useLegend
+        legend('input light','flashes','evolution','frequency', 'Location', 'southeast');
+    end
 end

@@ -47,7 +47,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
     if run == 1
         flashPointer = 1;
         for t=1:size(states,1)
-            while flashes(flashPointer, end) <= t & flashPointer < size(flashes,1)
+            while flashes(flashPointer, end) <= t && flashPointer < size(flashes,1)
                 point = squeeze(states(t,flashes(t, end-1),1:4));
                 set(scatter_handles(flashes(flashPointer, end-1)), 'Visible', 'on');
                 scatter_times(flashes(flashPointer, end-1)) = flash_display_time;
