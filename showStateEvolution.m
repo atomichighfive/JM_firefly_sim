@@ -4,7 +4,7 @@ function [ fig ] = showStateEvolution( states, dt, timescale, render )
     T = size(states,1);
     minF = min(min(states(:,:,6)));
     maxF = max(max(states(:,:,6)));
-    
+    mkdir output showStateEvolution;    
     fig = figure();
     figure(fig);
     
@@ -28,7 +28,7 @@ function [ fig ] = showStateEvolution( states, dt, timescale, render )
         xlim([0,size(states,2)+1]);
         if render
             drawnow;
-            print(['output/showStateEvolution/',num2str(t)], '-djpeg');
+            print(['output/showStateEvolution/',sprintf('%04d',t)], '-djpeg');
         else
             pause(dt/timescale);
         end
