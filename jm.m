@@ -36,7 +36,7 @@ legendStrings = strings(size(I,1),1); % Prepare for creating a plot legend
 t = dt:dt:time;
 for i=1:size(I,1)
     S = calculateSynchrony(states, flashes, dt, I(i,:)); % Calculate for every interval
-    legendStrings(i,:) = ['tol = ±', sprintf('%0.3f', diff(I(i,:))/2), 's']; % Append legend entry
+    legendStrings(i,:) = ['tol = ??', sprintf('%0.3f', diff(I(i,:))/2), 's']; % Append legend entry
     plot(t,S); hold on; % Plot
 end
 ylim([0,1.05]);
@@ -45,16 +45,16 @@ title('Godhetstal');
 xlabel('tid');
 ylabel('synkroniseringsgrad');
 legend(legendStrings, 'Location', 'southeast'); % Draw legend
-%% Tillståndsevolution
-showStateEvolution(states, dt, 1, false);
+%% Tillst??ndsevolution
+showStateEvolution(states, dt, 1, true);
 
-%% Cirkul�r tillst�ndsevolution
+%% Cirkul???r tillst???ndsevolution
 showCircularStateEvolution(states, dt, 0.25, false);
 
 %% Visa simulering
 showSimulation(states, flashes, dt, false, false);
 
-%% Visa en flugas detalierade tillst�nd
+%% Visa en flugas detalierade tillst???nd
 figure()
 fly = 4;
 plotFlyDetailed(states, flashes, dt, fly, true);
