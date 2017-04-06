@@ -18,11 +18,17 @@ function [ states, flashes ] = simulateFlock( Q, G, time, dt )
                 neig = neighbors(G, i);
                 for j=1:size(neig, 1);
                     flyIndex = neig(j);
+                    lookbehind = states(t, flyIndex, 7)/states(t, flyIndex, 6);
+                    flashesBefore = flashes(flashes(:,end) >= t-lookbehind, :);
                     [p, f, listening] = calcResponse(Qn(flyIndex,5), Qn(flyIndex,6));
-                    Qn(flyIndex,5) = p;
-                    Qn(flyIndex,6) = f;
-                    if listening == 1;
-                        flashes(end, flyIndex) = 1;
+                    if ~any(flashesBefore(:,flyIndex) == 1)                    
+                        Qn(flyIndex,5) = p;
+                        Qn(flyIndex,6) = f;
+                        if listening == 1;
+                            flashes(end, flyIndex) = 1;
+                        else
+                            flashes(end, flyIndex) = -1;
+                        end
                     else
                         flashes(end, flyIndex) = -1;
                     end

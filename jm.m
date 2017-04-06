@@ -1,17 +1,32 @@
-%% Generate initial state
+%% Generate spherical flock
 clear all;
 
-flockRadius = 4;
-flockDensity = 0.1;
-connectionThreshold = 2.6;
+flockRadius = 4; % Radius of spherical flock
+flockDensity = 0.1; % Density of generated flock
+connectionThreshold = 2; % Distance flys can see eachother
+zeta = 0.05; % Fraction of period to go blind after seeing a flash
 
 [Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
 Q(:,6) = 1+0.5*rand(N,1);
+Q(:,7) = zeta*ones(N,1);
 
 graphMetrics(G);
 
+
+%% Generate four flies test-case
+clear all;
+
+zeta = 0.1; % Fraction of period to go blind after seeing a flash
+
+[Q, G] = fourFlies();
+N = size(Q, 1);
+Q(:,5) = 1*rand(N,1);
+Q(:,6) = 1+0.5*rand(N,1);
+Q(:,7) = zeta*ones(N,1);
+
+graphMetrics(G);
 %% Simulate
 dt = 0.01;
 time = 10;
