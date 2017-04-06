@@ -1,7 +1,7 @@
 function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
 %SHOWSIMULATION Summary of this function goes here
 %   Detailed explanation goes here
-    flash_display_time = 0.15;
+    flash_display_time = 0.075;
     az = 45; el = 45;
 
     run = 1;
@@ -48,7 +48,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
         flashPointer = 1;
         for t=1:size(states,1)
             while flashes(flashPointer, end) <= t && flashPointer < size(flashes,1)
-                point = squeeze(states(t,flashes(t, end-1),1:4));
+                point = squeeze(states(t,flashes(flashPointer, end-1),1:4));
                 set(scatter_handles(flashes(flashPointer, end-1)), 'Visible', 'on');
                 scatter_times(flashes(flashPointer, end-1)) = flash_display_time;
                 if arrows
