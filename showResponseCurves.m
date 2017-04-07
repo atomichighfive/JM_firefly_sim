@@ -4,7 +4,7 @@ function [ ] = showResponseCurves( )
     fig = figure();
     maxsamples = 1000;
     samples = ceil(sqrt(maxsamples));
-    
+    mkdir output showResponseCurves;    
     X = linspace(0,1,samples);
     Y = linspace(0,1,samples);
     Z = zeros(samples, samples,3);
