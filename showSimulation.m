@@ -3,7 +3,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
 %   Detailed explanation goes here
     flash_display_time = 0.075;
     az = 45; el = 45;
-
+    mkdir output showSimulation;
     run = 1;
     fig = figure();
     outline_handle = gobjects(1);
@@ -81,7 +81,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
             title(['t=',num2str(t*dt)]);
             if render
                 drawnow;
-                print(['output/showSimulation/',num2str(t)], '-djpeg');
+                print(['output/showSimulation/',sprintf('%04d',t)], '-djpeg');
             else
                 pause(dt);
             end

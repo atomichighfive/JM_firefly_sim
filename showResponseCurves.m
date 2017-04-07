@@ -4,7 +4,7 @@ function [ ] = showResponseCurves( )
     fig = figure();
     maxsamples = 1000;
     samples = ceil(sqrt(maxsamples));
-    
+    mkdir output showResponseCurves;    
     X = linspace(0,1,samples);
     Y = linspace(0,1,samples);
     Z = zeros(samples, samples,3);
@@ -46,7 +46,7 @@ function [ ] = showResponseCurves( )
     xlim([0,1]);
     xlabel('evolution');
     ylabel('svar');
-    title('frekvenssvar');
+    title('Evolutionssvar');
     grid on
     %yyaxis right;
     subplot(1,2,2);
@@ -55,9 +55,9 @@ function [ ] = showResponseCurves( )
     xlim([0,1]);
     xlabel('evolution');
     ylabel('svar');
-    title('evolutionssvar');
+    title('Frekvenssvar');
     grid on;
-    %title('Svar för f=1')
+    %title('Svar f??r f=1')
     print('output/showResponseCurves/curves', '-djpeg');
 end
 

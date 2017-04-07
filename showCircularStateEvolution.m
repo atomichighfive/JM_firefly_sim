@@ -5,7 +5,7 @@ function [ fig ] = showCircularStateEvolution( states, dt, timescale, render )
     
     fig = figure();
     figure(fig);
-    
+    mkdir output showCircularStateEvolution;    
     maxF = max(max(states(:,:,6)));
     minF = min(min(states(:,:,6)));
     meanF = mean(mean(states(:,:,6)));
@@ -18,7 +18,7 @@ function [ fig ] = showCircularStateEvolution( states, dt, timescale, render )
         title(['T = ', num2str(t*dt,2)]);
         if render
             drawnow;
-            print(['output/showCircularStateEvolution/',num2str(t)], '-djpeg');
+            print(['output/showCircularStateEvolution/',sprintf('%04d',t)], '-djpeg');
         else
             pause(dt/timescale);
         end
