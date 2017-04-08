@@ -27,13 +27,13 @@ function [ ] = showResponseCurves( )
     
     subplot(2,2,1)
     surf(X,Y,Z(:,:,1)); axis equal
-    title('Evolutionssvar');
+    title('Frekvenssvar');
     xlabel('Evolution');
     ylabel('Frekvens');
     zlabel('ny');
     subplot(2,2,2)
     surf(X,Y,Z(:,:,2)); axis equal
-    title('Frekvenssvar');
+    title('Evolutionssvar');
     xlabel('Evolution');
     ylabel('Frekvens');
     zlabel('ny');
@@ -46,7 +46,7 @@ function [ ] = showResponseCurves( )
     xlim([0,1]);
     xlabel('evolution');
     ylabel('svar');
-    title('frekvenssvar');
+    title('evolutionssvar');
     grid on
     %yyaxis right;
     subplot(1,2,2);
@@ -55,7 +55,7 @@ function [ ] = showResponseCurves( )
     xlim([0,1]);
     xlabel('evolution');
     ylabel('svar');
-    title('evolutionssvar');
+    title('frekvenssvar');
     grid on;
     %title('Svar för f=1')
     print('output/showResponseCurves/curves', '-djpeg');

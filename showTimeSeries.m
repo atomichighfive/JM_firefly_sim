@@ -7,10 +7,10 @@ function [ fig ] = showTimeSeries( states, flashes, dt );
         data(flashes(i,end-1), flashes(i,end)) = 1;
     end
     figure(fig);
-    imagesc(data);
+    imagesc(-data);
     
-    caxis([0,3])
-    colormap('hot');
+    caxis([-1,0])
+    colormap('pink');
     axis equal; grid on;
 end
     

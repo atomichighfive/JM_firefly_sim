@@ -39,13 +39,15 @@ function [ handles ] = plotFlyDetailed( states, flashes, dt, oscilator, useLegen
     handles = gobjects(4,1);
     yyaxis('left');
     handles(1) = stem(x,abs(y), 'Marker', 'none', 'Linewidth', 0.5, 'Color', 'black'); hold on;
-    handles(2) = plot(selfx, selfy, 'k*');
-    handles(3) = plot(t,p, '--');
+    handles(2) = scatter(selfx, selfy , 'black', 'filled');
+    handles(3) = plot(t,p, '--', 'linewidth', 1.5);
+    ylabel('evolution');
     ylim([0,1.1]);
     yyaxis('right');
-    handles(4) = plot(t,f, '-.'); hold off;
+    handles(4) = plot(t,f, '-.', 'linewidth', 1.5); hold off;
+    ylabel('frekvens');
     yyaxis('left');
     if useLegend
-        legend('input light','flashes','evolution','frequency', 'Location', 'southeast');
+        legend('insignal','blinkar själv','evolution','frekvens', 'Location', 'southeast');
     end
 end

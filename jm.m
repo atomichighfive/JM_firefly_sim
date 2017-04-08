@@ -2,8 +2,8 @@
 clear all;
 
 flockRadius = 4; % Radius of spherical flock
-flockDensity = 0.1; % Density of generated flock
-connectionThreshold = 2; % Distance flys can see eachother
+flockDensity = 0.5; % Density of generated flock
+connectionThreshold = 1; % Distance flys can see eachother
 zeta = 0.05; % Fraction of period to go blind after seeing a flash
 
 [Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
@@ -29,7 +29,7 @@ Q(:,7) = zeta*ones(N,1);
 graphMetrics(G);
 %% Simulate
 dt = 0.01;
-time = 10;
+time = 2;
 
 [states, flashes] = simulateFlock(Q, G, time, dt);
 
@@ -61,7 +61,7 @@ xlabel('tid');
 ylabel('synkroniseringsgrad');
 legend(legendStrings, 'Location', 'southeast'); % Draw legend
 %% Tillst??ndsevolution
-showStateEvolution(states, dt, 1, true);
+showStateEvolution(states, dt, 1, false);
 
 %% Cirkul???r tillst???ndsevolution
 showCircularStateEvolution(states, dt, 0.25, false);
@@ -71,7 +71,7 @@ showSimulation(states, flashes, dt, false, false);
 
 %% Visa en flugas detalierade tillst???nd
 figure()
-fly = 4;
+fly = 6;
 plotFlyDetailed(states, flashes, dt, fly, true);
 grid on;
-xlabel('time');
+xlabel('tid');
