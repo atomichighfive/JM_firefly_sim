@@ -11,6 +11,9 @@ function [ fig ] = showTimeSeries( states, flashes, dt );
     
     caxis([-1,0])
     colormap('pink');
-    axis equal; grid on;
+    grid on;
+    xlabel('tid');
+    ylabel('flugor');
+    title('tidsserie');
 end
     

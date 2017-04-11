@@ -1,9 +1,11 @@
-function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
+function [ fig ] = showSimulation2( states, flashes, dt, timescale, arrows, render )
 %SHOWSIMULATION Summary of this function goes here
 %   Detailed explanation goes here
-    flash_display_time = 0.075;
+    framerate = 25;
+    flash_display_time = 0.1;
     az = 45; el = 45;
-
+    displaystep = (1/framerate)
+    
     run = 1;
     fig = figure();
     outline_handle = gobjects(1);
@@ -46,7 +48,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
     
     if run == 1
         flashPointer = 1;
-        for t=1:size(states,1)
+        for t=1:round(timescale*displaystep/dt):size(states,1)
             while flashes(flashPointer, end) <= t && flashPointer < size(flashes,1)
                 point = squeeze(states(t,flashes(flashPointer, end-1),1:4));
                 set(scatter_handles(flashes(flashPointer, end-1)), 'Visible', 'on');
@@ -74,7 +76,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
                 end
             end
 
-            scatter_times = scatter_times - dt;
+            scatter_times = scatter_times - displaystep;
 
 
             view(az,el);
@@ -83,7 +85,7 @@ function [ fig ] = showSimulation2( states, flashes, dt, arrows, render )
                 drawnow;
                 print(['output/showSimulation/',num2str(t)], '-djpeg');
             else
-                pause(dt);
+                pause(displaystep);
             end
             if ~ishandle(fig)
                 break

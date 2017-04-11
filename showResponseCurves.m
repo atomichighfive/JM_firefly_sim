@@ -40,21 +40,23 @@ function [ ] = showResponseCurves( )
     subplot(1,1,1);
     hold on;
     %yyaxis left;
-    subplot(1,2,1);
-    plot(U,V(:,1)); axis equal
+    subplot(2,1,1);
+    plot(U,V(:,1)); hold on;
+    plot([0, 1], [0, 1], '--'); hold off
     ylim([0,1.1]);
     xlim([0,1]);
     xlabel('evolution');
-    ylabel('svar');
+    ylabel('ny evolution');
     title('evolutionssvar');
+    legend('evolutionssvar', 'naturlig evolution', 'Location', 'southeast');
     grid on
     %yyaxis right;
-    subplot(1,2,2);
-    plot(U,V(:,2)); axis equal
-    ylim([0.8,1.3]);
+    subplot(2,1,2);
+    plot(U,V(:,2));
+    ylim([min(V(:,2))-0.1, max(V(:,2)+0.1)]);
     xlim([0,1]);
     xlabel('evolution');
-    ylabel('svar');
+    ylabel('ny frekvens');
     title('frekvenssvar');
     grid on;
     %title('Svar för f=1')
