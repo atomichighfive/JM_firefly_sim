@@ -3,14 +3,14 @@ clear all;
 
 flockRadius = 5; % Radius of spherical flock
 flockDensity = 0.5; % Density of generated flock
-connectionThreshold = 1.4; % Distance flys can see eachother
+connectionThreshold = 1.5; % Distance flys can see eachother
 zeta = 0.05; % Fraction of period to go blind after seeing a flash
 
 [Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
 Q(:,6) = 1+0.5*rand(N,1);
-Q(:,7) = zeta*ones(N,1);
+Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
 
@@ -29,9 +29,9 @@ Q(:,7) = zeta*ones(N,1);
 graphMetrics(G);
 %% Simulate
 dt = 0.0001;
-time = 5;
+time = 20;
 
-[states, flashes] = simulateFlock(Q, G, time, dt);
+[states, flashes] = simulateFlock(Q, G, time, dt, zeta);
 
 %% Show graph metrics
 graphMetrics(G);

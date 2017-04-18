@@ -13,7 +13,7 @@ function [ fig ] = showStateEvolution( states, dt, timescale, render )
     subplot(1,2,2);
     title('Speed')
     
-    for t=1:T
+    for t=1:100:T
         suptitle(num2str(t*dt));
         figure(fig);
         subplot(1,2,1);
