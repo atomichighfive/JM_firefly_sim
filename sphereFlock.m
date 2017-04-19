@@ -17,5 +17,17 @@ function [ Q, G ] = sphereFlock( radius, density, connectionThreshold )
     
     A = adjacencyFromPositions(Q(:,2:4),connectionThreshold);
     G = graph(A);
+    
+    %remove flies with no neighbours
+    toRemove = [];
+    for q=1:size(Q(:,1),1)
+        if size(neighbors(G, q), 1) < 1
+            toRemove(end+1) = q;
+        end
+    end
+    Q(toRemove, :) = [];
+    
+    A = adjacencyFromPositions(Q(:,2:4),connectionThreshold);
+    G = graph(A);
 end
 

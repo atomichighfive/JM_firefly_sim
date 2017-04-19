@@ -1,8 +1,8 @@
-function [ states, flashes ] = simulateFlock( Q, G, time, dt, zeta )
+function [ states, flashes ] = simulateFlock( Q, G, time, dt, thau, zeta )
 %SIMULATEFLOCK Summary of this function goes here
 %   Detailed explanation goes here
 
-    T = time/dt;
+    T = round(time/dt);
     N = size(Q,1);
 
     states = zeros([T, size(Q)]);
@@ -14,7 +14,7 @@ function [ states, flashes ] = simulateFlock( Q, G, time, dt, zeta )
         Qn = Q;
         for i=1:N;
             if Qn(i,5) >= 1;
-                [Qn, flashes] = doFlash(t, i, Qn, states, flashes, G, zeta);
+                [Qn, flashes] = doFlash(t, i, Qn, states, flashes, G, thau, zeta);
             end
             Qn(i,5) = Qn(i,5)+Qn(i,6)*dt;
             Qn(i,7) = Qn(i,7)-Qn(i,6)*dt;

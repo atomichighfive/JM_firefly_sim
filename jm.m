@@ -4,7 +4,8 @@ clear all;
 flockRadius = 5; % Radius of spherical flock
 flockDensity = 0.5; % Density of generated flock
 connectionThreshold = 1.5; % Distance flys can see eachother
-zeta = 0.05; % Fraction of period to go blind after seeing a flash
+zeta = 0.05; % fraction of period to go blind after seeing a flash
+thau = 0.05; % fraction of period to go blind after flashing
 
 [Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
 N = size(Q, 1);
@@ -18,7 +19,8 @@ graphMetrics(G);
 %% Generate four flies test-case
 clear all;
 
-zeta = 0.1; % Fraction of period to go blind after seeing a flash
+zeta = 0.05; % Fraction of period to go blind after seeing a flash
+thau = 0.05;
 
 [Q, G] = fourFlies();
 N = size(Q, 1);
@@ -28,10 +30,13 @@ Q(:,7) = zeta*ones(N,1);
 
 graphMetrics(G);
 %% Simulate
-dt = 0.0001;
-time = 20;
+clear states
+clear flashes
 
-[states, flashes] = simulateFlock(Q, G, time, dt, zeta);
+dt = 1*10^-4;
+time = 7.5;
+
+[states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta);
 
 %% Show graph metrics
 graphMetrics(G);
@@ -53,7 +58,11 @@ t = dt:dt:time;
 for i=1:size(I,1)
     S = calculateSynchrony(states, flashes, dt, I(i,:)); % Calculate for every interval
     legendStrings(i,:) = ['tol = ±', sprintf('%0.3f', diff(I(i,:))/2), 's']; % Append legend entry
-    plot(t,S); hold on; % Plot
+    if size(t) ~= size(S)'
+        plot([0,t], S); hold on;
+    else
+        plot(t,S); hold on; % Plot
+    end
 end
 ylim([0,1.05]);
 grid on;
@@ -68,11 +77,11 @@ showStateEvolution(states, dt, 1, false);
 showCircularStateEvolution(states, dt, 0.25, false);
 
 %% Visa simulering
-showSimulation(states, flashes, dt, 0.25, false, false);
+showSimulation(states, flashes, dt, 0.1, false, false);
 
 %% Visa en flugas detalierade tillstånd
 figure()
-fly = 6;
+fly = 4;
 plotFlyDetailed(states, flashes, dt, fly, true);
 grid on;
 xlabel('tid');

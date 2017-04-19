@@ -11,7 +11,7 @@ function [ fig ] = showCircularStateEvolution( states, dt, timescale, render )
     meanF = mean(mean(states(:,:,6)));
     
     maxPlotRadius = 1+meanF-minF;
-    for t=1:T
+    for t=1:100:T
         polarplot([2*pi, 2*pi],[0,maxPlotRadius],'k'); hold on;
         polarplot(2*pi*states(t,:,5),1+meanF-states(t,:,6), '.'); hold off;
         rlim([0,maxPlotRadius]);
