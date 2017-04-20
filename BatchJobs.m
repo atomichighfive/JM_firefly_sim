@@ -11,10 +11,10 @@ timeTolerance = [-0.01, 0.01];
 
 % variable
     % flock
-numberOfIterations = 20;
-frequencySpreads = 1;
+numberOfIterations = 10;
+frequencySpreads = linspace(0.5, 1.5, 5);
 phaseSpreads = 1;
-flockRadi = 5; % Radius of spherical flock
+flockRadi = 3; % Radius of spherical flock
 flockDensities = 0.2; % Density of generated flock
 
     % flies
@@ -37,7 +37,10 @@ results = zeros([ ...
     3 ...  % Size of results vector
     ]);
 
-
+evaluations = prod(size(results));
+counter = 0;
+progressBar = waitbar(0, [num2str(counter), '/', num2str(evaluations)]);
+tic; % Initialize update timer
 for frequencySpreadIndex = 1:size(frequencySpreads, 2)
     frequencySpread = frequencySpreads(frequencySpreadIndex);
     for phaseSpreadIndex = 1:size(phaseSpreads, 2)
@@ -68,7 +71,8 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
                                 % evaluate
                                 [synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = ...
                                 evaluateSynchrony( states, flashes, dt, synchronyLimit, timeTolerance );
-                            
+                                
+                                % save result
                                 results( ...
                                     frequencySpreadIndex, ...
                                     phaseSpreadIndex, ...
@@ -79,7 +83,14 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
                                     zetaIndex, ...
                                     thauIndex, ...
                                     1:3) = [synchronyTime, avgFlashesToSync, averageSynchronyLevel];
-                                    
+                                   
+                                counter = counter + 1;
+                                
+                                if toc >= 1 % Update progress bar every second.
+                                    waitbar(counter/evaluations, progressBar, [num2str(counter), '/', num2str(evaluations)]);
+                                    tic;
+                                end
+                                
                             end
                         end
                     end
@@ -88,5 +99,5 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
         end
     end
 end
-
+close(progressBar);
                                 
