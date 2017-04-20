@@ -19,6 +19,6 @@ function [ S ] = calculateSynchrony( states, flashes, dt, I )
     end
     %imagesc(scores);
     S = sum(scores,2)./(N*(N-1));
-    S = S(1:T);
+    S = S(1:T)';
 end
 

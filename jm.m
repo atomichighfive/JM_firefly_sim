@@ -2,8 +2,8 @@
 clear all;
 
 flockRadius = 5; % Radius of spherical flock
-flockDensity = 0.5; % Density of generated flock
-connectionThreshold = 1.5; % Distance flys can see eachother
+flockDensity = 0.2; % Density of generated flock
+connectionThreshold = 2.5; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
 thau = 0.05; % fraction of period to go blind after flashing
 
@@ -19,14 +19,14 @@ graphMetrics(G);
 %% Generate four flies test-case
 clear all;
 
-zeta = 0.05; % Fraction of period to go blind after seeing a flash
-thau = 0.05;
+zeta = 0.05; % fraction of period to go blind after seeing a flash
+thau = 0.05; % fraction of period to go blind after flashing
 
 [Q, G] = fourFlies();
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
 Q(:,6) = 1+0.5*rand(N,1);
-Q(:,7) = zeta*ones(N,1);
+Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
 %% Simulate
@@ -70,10 +70,22 @@ title('Godhetstal');
 xlabel('tid');
 ylabel('synkroniseringsgrad');
 legend(legendStrings, 'Location', 'southeast'); % Draw legend
+
+
+%% Utvärdera resultat
+synchronyLimit = 0.95;
+timeTolerance = [-0.01, 0.01];
+
+[ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSynchrony( states, flashes, dt, synchronyLimit, timeTolerance );
+
+disp(['Time of synchrony: ', num2str(synchronyTime)]);
+disp(['Average flashes before synchrony: ', num2str(avgFlashesToSync)]);
+disp(['Level of synchrony reached: ', num2str(averageSynchronyLevel)]);
+
 %% Tillståndsevolution
 showStateEvolution(states, dt, 1, false);
 
-%% Cirkulär tillst???ndsevolution
+%% Cirkulär tillståndsevolution
 showCircularStateEvolution(states, dt, 0.25, false);
 
 %% Visa simulering
