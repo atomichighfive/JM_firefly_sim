@@ -8,31 +8,25 @@ function [ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSy
     
     candidates = find(S < synchronyLimit);
     if isempty(candidates)
-        synchronyPoint = -1;
-        synchronyTime = -1;
+        synchronyPoint = size(S,2);
     else
         synchronyPoint = candidates(end);
-        synchronyTime = synchronyPoint*dt;
     end
-    
+    synchronyTime = synchronyPoint*dt;
     
     %% Determine average flashes until synchrony is reached
     
-    if synchronyPoint >= 0
-        flashesBeforeSync = flashes(flashes(:,end) <= synchronyPoint,:);
-        numerOfFlies = size(flashes, 2) - 2;
-        avgFlashesToSync = size(flashesBeforeSync, 1)/numerOfFlies;
-    else
-        avgFlashesToSync = -1;
-    end
+    flashesBeforeSync = flashes(flashes(:,end) <= synchronyPoint,:);
+    numerOfFlies = size(flashes, 2) - 2;
+    avgFlashesToSync = size(flashesBeforeSync, 1)/numerOfFlies;
     
     
-    %% Determine average synchrony level
+    %% Determine average synchrony level after synchrony limit is reached
     
-    if synchronyPoint >= 0
+    if synchronyPoint < size(S,2)
         averageSynchronyLevel = mean(S(synchronyPoint:end));
     else
-        averageSynchronyLevel = -1;
+        averageSynchronyLevel = 0;
     end
     
 end

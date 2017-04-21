@@ -7,7 +7,9 @@ connectionThreshold = 2.5; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
 thau = 0.05; % fraction of period to go blind after flashing
 
-[Q, G] = sphereFlock(flockRadius, flockDensity, connectionThreshold);
+Qinit = sphereFlock(flockRadius, flockDensity);
+[Q, G] = calculateGraph(Qinit, connectionThreshold);
+
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
 Q(:,6) = 1+0.5*rand(N,1);

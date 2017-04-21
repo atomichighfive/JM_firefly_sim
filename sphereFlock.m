@@ -1,4 +1,4 @@
-function [ Q, G ] = sphereFlock( radius, density, connectionThreshold )
+function [ Q ] = sphereFlock( radius, density )
     N = floor(density*(2*radius)^3);    % Ammount to generate
     Q = zeros(N,4); % Preallocate for speed
     discarded = []; % For remembering which rows are unused
@@ -15,19 +15,5 @@ function [ Q, G ] = sphereFlock( radius, density, connectionThreshold )
     Q(discarded,:) = [];    % Remove unused rows
     Q(:,1) = [1:size(Q,1)]; % Assign IDs
     
-    A = adjacencyFromPositions(Q(:,2:4),connectionThreshold);
-    G = graph(A);
-    
-    %remove flies with no neighbours
-    toRemove = [];
-    for q=1:size(Q(:,1),1)
-        if size(neighbors(G, q), 1) < 1
-            toRemove(end+1) = q;
-        end
-    end
-    Q(toRemove, :) = [];
-    
-    A = adjacencyFromPositions(Q(:,2:4),connectionThreshold);
-    G = graph(A);
 end
 
