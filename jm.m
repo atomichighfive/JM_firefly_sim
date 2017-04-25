@@ -3,7 +3,7 @@ clear all;
 
 flockRadius = 5; % Radius of spherical flock
 flockDensity = 0.2; % Density of generated flock
-connectionThreshold = 2.5; % Distance flys can see eachother
+connectionThreshold = 1.8; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
 thau = 0.05; % fraction of period to go blind after flashing
 
@@ -36,9 +36,19 @@ clear states
 clear flashes
 
 dt = 1*10^-4;
-time = 7.5;
+time = 10;
 
 [states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta);
+
+% print results
+synchronyLimit = 0.85;
+timeTolerance = [-0.01, 0.01];
+
+[ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSynchrony( states, flashes, dt, synchronyLimit, timeTolerance );
+
+disp(['Time of synchrony: ', num2str(synchronyTime)]);
+disp(['Average flashes before synchrony: ', num2str(avgFlashesToSync)]);
+disp(['Level of synchrony reached: ', num2str(averageSynchronyLevel)]);
 
 %% Show graph metrics
 graphMetrics(G);
@@ -80,9 +90,33 @@ timeTolerance = [-0.01, 0.01];
 
 [ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSynchrony( states, flashes, dt, synchronyLimit, timeTolerance );
 
+
+    % Determine best level of synchrony
+    top = 1;
+    bottom = 0;
+    for i = 1:10
+        pivot = (top+bottom)/2;
+        [~, ~, upper] = evaluateSynchrony(states, flashes, dt, top, timeTolerance);
+        [~, ~, lower] = evaluateSynchrony(states, flashes, dt, pivot, timeTolerance);
+         
+        if upper <= 0 && lower > 0
+            bottom = pivot;
+        else
+            top = pivot;
+        end
+        
+        if top-bottom <= timeTolerance(2)-timeTolerance(1)
+            break;
+        end
+    end
+    
+    bestSynchronyLevel = (top+bottom)/2;
+
+
 disp(['Time of synchrony: ', num2str(synchronyTime)]);
 disp(['Average flashes before synchrony: ', num2str(avgFlashesToSync)]);
 disp(['Level of synchrony reached: ', num2str(averageSynchronyLevel)]);
+disp(['Best synchrony level reached: ', num2str(bestSynchronyLevel), '±', num2str((top-bottom)/2)]);
 
 %% Tillståndsevolution
 showStateEvolution(states, dt, 1, false);

@@ -29,5 +29,6 @@ function [ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSy
         averageSynchronyLevel = 0;
     end
     
+    
 end
 
