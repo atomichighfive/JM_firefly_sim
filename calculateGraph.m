@@ -7,16 +7,22 @@ function [ Qn, G ] = calculateGraph( Q, connectionThreshold )
     G = graph(A);
     
     %remove flies with no neighbours
-    toRemove = [];
-    for q=1:size(Qn(:,1),1)
-        if size(neighbors(G, q), 1) < 1
-            toRemove(end+1) = q;
-        end
-    end
-    Qn(toRemove, :) = [];
+    %toRemove = [];
+    %for q=1:size(Qn(:,1),1)
+    %    if size(neighbors(G, q), 1) < 1
+    %        toRemove(end+1) = q;
+    %    end
+    %end
+    %Qn(toRemove, :) = [];
+    
+    %A = adjacencyFromPositions(Qn(:,2:4),connectionThreshold);
+    %G = graph(A);
+    
+    bins = conncomp(G);
+    mainGraphBin = mode(bins);
+    Qn = Q(find(bins == mainGraphBin),:);
     
     A = adjacencyFromPositions(Qn(:,2:4),connectionThreshold);
     G = graph(A);
-
 end
 

@@ -1,18 +1,18 @@
 %% Generate spherical flock
 clear all;
 
-flockRadius = 5; % Radius of spherical flock
+flockRadius = 4; % Radius of spherical flock
 flockDensity = 0.2; % Density of generated flock
-connectionThreshold = 1.8; % Distance flys can see eachother
+connectionThreshold = 2.5; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
-thau = 0.05; % fraction of period to go blind after flashing
+thau = 0.0; % fraction of period to go blind after flashing
 
 Qinit = sphereFlock(flockRadius, flockDensity);
 [Q, G] = calculateGraph(Qinit, connectionThreshold);
 
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
-Q(:,6) = 1+0.5*rand(N,1);
+Q(:,6) = 1+0.4*rand(N,1);
 Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
@@ -27,7 +27,7 @@ thau = 0.05; % fraction of period to go blind after flashing
 [Q, G] = fourFlies();
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
-Q(:,6) = 1+0.5*rand(N,1);
+Q(:,6) = 1+1*rand(N,1);
 Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
@@ -57,7 +57,7 @@ graphMetrics(G);
 plotFlock(Q, G);
 
 %% Show response curves
-showResponseCurves();
+showResponseCurves(thau);
 
 %% Tidsserie
 showTimeSeries(states, flashes, dt);
@@ -70,11 +70,7 @@ t = dt:dt:time;
 for i=1:size(I,1)
     S = calculateSynchrony(states, flashes, dt, I(i,:)); % Calculate for every interval
     legendStrings(i,:) = ['tol = ±', sprintf('%0.3f', diff(I(i,:))/2), 's']; % Append legend entry
-    if size(t) ~= size(S)'
-        plot([0,t], S); hold on;
-    else
-        plot(t,S); hold on; % Plot
-    end
+    plot(t(1:size(S,2)), S); hold on;
 end
 ylim([0,1.05]);
 grid on;
@@ -91,32 +87,13 @@ timeTolerance = [-0.01, 0.01];
 [ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSynchrony( states, flashes, dt, synchronyLimit, timeTolerance );
 
 
-    % Determine best level of synchrony
-    top = 1;
-    bottom = 0;
-    for i = 1:10
-        pivot = (top+bottom)/2;
-        [~, ~, upper] = evaluateSynchrony(states, flashes, dt, top, timeTolerance);
-        [~, ~, lower] = evaluateSynchrony(states, flashes, dt, pivot, timeTolerance);
-         
-        if upper <= 0 && lower > 0
-            bottom = pivot;
-        else
-            top = pivot;
-        end
-        
-        if top-bottom <= timeTolerance(2)-timeTolerance(1)
-            break;
-        end
-    end
-    
-    bestSynchronyLevel = (top+bottom)/2;
+bestSynchronyLevel = trueSynchronyLevel(states, flashes, dt, timeTolerance, 20);
 
 
 disp(['Time of synchrony: ', num2str(synchronyTime)]);
 disp(['Average flashes before synchrony: ', num2str(avgFlashesToSync)]);
 disp(['Level of synchrony reached: ', num2str(averageSynchronyLevel)]);
-disp(['Best synchrony level reached: ', num2str(bestSynchronyLevel), '±', num2str((top-bottom)/2)]);
+disp(['Best synchrony level reached: ', num2str(bestSynchronyLevel)]);
 
 %% Tillståndsevolution
 showStateEvolution(states, dt, 1, false);
@@ -129,7 +106,7 @@ showSimulation(states, flashes, dt, 0.1, false, false);
 
 %% Visa en flugas detalierade tillstånd
 figure()
-fly = 4;
+fly = 7;
 plotFlyDetailed(states, flashes, dt, fly, true);
 grid on;
 xlabel('tid');

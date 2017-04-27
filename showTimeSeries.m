@@ -7,6 +7,7 @@ function [ fig ] = showTimeSeries( states, flashes, dt );
     F = flashes(:,end-1);
     
     scatter(T,F,'.');
-    grid on; xlim([0, time]);
+    xaxis = xlim;
+    grid on; xlim([0, xaxis(2)]);
 end
     

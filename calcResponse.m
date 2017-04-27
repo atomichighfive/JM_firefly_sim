@@ -9,7 +9,9 @@ function [p,f,listening] = calcResponse(phase,freq, thau)
 %                freq: current frequenc
     alpha = 0.5;
     beta = 0.5;
-    if thau < phase & phase < 1
+    gamma = 0.05;
+    
+    if thau < phase && phase < 1
         f = freq*calcFreq(phase);
         p = calcPhase(phase);
         listening = 1;
@@ -30,9 +32,11 @@ function [p,f,listening] = calcResponse(phase,freq, thau)
     function [f] = calcFreq(phase)
         if phase <= thau
            f = 1;
-        elseif phase <= (thau+beta/2)
+        elseif phase <= (beta-gamma/2)
            f = 1+alpha*thau-alpha*phase;
-        elseif phase <= beta
+        elseif phase <= (beta-gamma/2)
+            f = 1;
+        elseif phase <= beta+gamma/2
            f = 1;
         else %phase > beta
            f = 1.25-0.5*(phase-beta);

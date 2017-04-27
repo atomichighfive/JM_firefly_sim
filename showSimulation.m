@@ -1,6 +1,10 @@
-function [ fig ] = showSimulation2( states, flashes, dt, timescale, arrows, render )
+function [ fig ] = showSimulation( states, flashes, dt, timescale, arrows, render )
 %SHOWSIMULATION Summary of this function goes here
 %   Detailed explanation goes here
+    if render
+        mkdir output showSimulation;
+    end
+
     framerate = 25;
     flash_display_time = 0.1;
     az = 45; el = 45;

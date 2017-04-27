@@ -1,4 +1,4 @@
-function [ ] = showResponseCurves( )
+function [ ] = showResponseCurves( thau )
 %SHOWRESPONSECURVES Summary of this function goes here
 %   Detailed explanation goes here
     fig = figure();
@@ -11,7 +11,7 @@ function [ ] = showResponseCurves( )
     [XX,YY] = meshgrid(X,Y);
     for i = 1:samples
         for j = 1:samples
-            [p,f,l] = calcResponse(XX(i,j), YY(i,j));
+            [p,f,l] = calcResponse(XX(i,j), YY(i,j), thau);
             Z(i,j,:) = [p,f,l];
         end
     end
@@ -21,7 +21,7 @@ function [ ] = showResponseCurves( )
     u = linspace(0,1,maxsamples);
     for i=1:maxsamples
         U(i) = u(i);
-        [p,f,l] = calcResponse(u(i),1);
+        [p,f,l] = calcResponse(u(i),1, thau);
         V(i,:) = [p,f,l];
     end
     
@@ -60,6 +60,5 @@ function [ ] = showResponseCurves( )
     title('frekvenssvar');
     grid on;
     %title('Svar för f=1')
-    print('output/showResponseCurves/curves', '-djpeg');
 end
 

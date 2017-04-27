@@ -1,7 +1,11 @@
 function [ fig ] = showStateEvolution( states, dt, timescale, render )
 %SHOWSTATEEVOLUTION Summary of this function goes here
 %   Detailed explanation goes here
+    framerate = 25;
+
     T = size(states,1);
+    displaystep = 1/framerate;
+    step = ceil(timescale*displaystep/dt);
     minF = min(min(states(:,:,6)));
     maxF = max(max(states(:,:,6)));
     mkdir output showStateEvolution;    
@@ -13,7 +17,7 @@ function [ fig ] = showStateEvolution( states, dt, timescale, render )
     subplot(1,2,2);
     title('Speed')
     
-    for t=1:1:T
+    for t=1:step:T
         suptitle(num2str(t*dt));
         figure(fig);
         subplot(1,2,1);
@@ -30,7 +34,7 @@ function [ fig ] = showStateEvolution( states, dt, timescale, render )
             drawnow;
             print(['output/showStateEvolution/',sprintf('%04d',t)], '-djpeg');
         else
-            pause(dt/timescale);
+            pause(displaystep);
         end
         if ~ishandle(fig)
             break;
