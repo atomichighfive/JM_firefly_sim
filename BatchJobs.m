@@ -1,6 +1,5 @@
 %% Save results
-UUID = java.util.UUID.randomUUID;
-name = [date, fprintf('%s\n', char(UUID))];
+name = datetime;
 
 clear Q G states flashes top bottom pivot
 clear flockDensity flockDensityIndex flockRadius flockRadiusIndex
@@ -25,18 +24,18 @@ timeTolerance = [-0.01, 0.01];
 
 % variable
     % flock
-numberOfIterations = 10;
+numberOfIterations = 100;
 frequencySpreads = 1;
 phaseSpreads = 1;
 flockRadi = 5; % Radius of spherical flock
 flockDensities = 0.2; % Density of generated flock
 
     % flies
-connectionThresholds = linspace(1,3,30); % Distance flys can see eachother
+connectionThresholds = 2.5; % Distance flys can see eachother
 
     % fly
 zetas = 0.05; % fraction of period to go blind after seeing a flash
-thaus = [0, 0.1]; % fraction of period to go blind after flashing
+thaus = [0]; % fraction of period to go blind after flashing
 
 
 synchronyTime = zeros([ ...
@@ -198,6 +197,9 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
     end
 end
 close(progressBar);
+
+
+%% No variation, only iterations
 
 
 %% varying connection thresholds, 2 thaus, any number of iterations
