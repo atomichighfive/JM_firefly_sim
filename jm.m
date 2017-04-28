@@ -3,7 +3,7 @@ clear all;
 
 flockRadius = 4; % Radius of spherical flock
 flockDensity = 0.2; % Density of generated flock
-connectionThreshold = 2.5; % Distance flys can see eachother
+connectionThreshold = 2; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
 thau = 0.0; % fraction of period to go blind after flashing
 
@@ -12,7 +12,7 @@ Qinit = sphereFlock(flockRadius, flockDensity);
 
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
-Q(:,6) = 1+0.4*rand(N,1);
+Q(:,6) = 1+0.5*rand(N,1);
 Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
@@ -36,7 +36,7 @@ clear states
 clear flashes
 
 dt = 1*10^-4;
-time = 10;
+time = 4;
 
 [states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta);
 
@@ -63,8 +63,8 @@ showResponseCurves(thau);
 showTimeSeries(states, flashes, dt);
 
 %% Godhetstal
-synchronyWithin = [0.05, 0.01]; %Error tolerance in seconds
-I = ([-1;1]*linspace(synchronyWithin(1),synchronyWithin(2),3))'; % Set up intervals to evaluate for
+synchronyWithin = [0.05, 0.005]; %Error tolerance in seconds
+I = ([-1;1]*linspace(synchronyWithin(1),synchronyWithin(2),2))'; % Set up intervals to evaluate for
 legendStrings = strings(size(I,1),1); % Prepare for creating a plot legend
 t = dt:dt:time;
 for i=1:size(I,1)
@@ -73,6 +73,7 @@ for i=1:size(I,1)
     plot(t(1:size(S,2)), S); hold on;
 end
 ylim([0,1.05]);
+xlim([0,time]);
 grid on;
 title('Godhetstal');
 xlabel('tid');

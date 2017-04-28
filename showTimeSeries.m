@@ -1,7 +1,6 @@
 function [ fig ] = showTimeSeries( states, flashes, dt );
 %SHOWMETRICS Summary of this function goes here
 %   Detailed explanation goes here
-    fig = figure();
     
     T = flashes(:,end)*dt;
     F = flashes(:,end-1);

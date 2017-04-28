@@ -7,7 +7,7 @@ clear frequencySpread frequencySpreadIndex iteration zeta zetaIndex
 clear thau thayIndex connectionThreshold connectionThresholdIndex
 
 mkdir output simulations;
-save(['output/simulations/', name]);
+save(['output/simulations/', char(name)]);
 %% Batch simulate
 
 % Parameters
