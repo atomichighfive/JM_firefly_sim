@@ -68,7 +68,7 @@ I = ([-1;1]*linspace(synchronyWithin(1),synchronyWithin(2),2))'; % Set up interv
 legendStrings = strings(size(I,1),1); % Prepare for creating a plot legend
 t = dt:dt:time;
 for i=1:size(I,1)
-    S = calculateSynchrony(states, flashes, dt, I(i,:)); % Calculate for every interval
+    [S, scores] = calculateSynchrony(states, flashes, dt, I(i,:)); % Calculate for every interval
     legendStrings(i,:) = ['tol = ±', sprintf('%0.3f', diff(I(i,:))/2), 's']; % Append legend entry
     plot(t(1:size(S,2)), S); hold on;
 end

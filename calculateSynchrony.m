@@ -1,4 +1,4 @@
-function [ S ] = calculateSynchrony( states, flashes, dt, I )
+function [ S, scores ] = calculateSynchrony( states, flashes, dt, I )
 %CALCULATESYNCHRONY Summary of this function goes here
 %   Detailed explanation goes here
     lookbehind = floor(I(1)/dt);
@@ -17,8 +17,7 @@ function [ S ] = calculateSynchrony( states, flashes, dt, I )
            scores(t:t+ceil(flyPeriod), fly) = size(flashesAround,1)-1;
        end
     end
-    %imagesc(scores);
-    simulationStump = 1*mean(states(end,:,6));
+    simulationStump = 1/mean(states(end,:,6));
     stumpSize = ceil(simulationStump/dt);
     
     S = sum(scores,2)./(N*(N-1));

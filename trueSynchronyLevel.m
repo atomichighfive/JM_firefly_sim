@@ -21,6 +21,6 @@ function [ SynchronyLevel ] = trueSynchronyLevel( states, flashes, dt, timeToler
         end
     end
     
-    SynchronyLevel = (top+bottom)/2;
+    SynchronyLevel = bottom;
 end
 
