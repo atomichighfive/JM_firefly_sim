@@ -271,13 +271,4 @@ plot(connectionThresholds, percentSuccess(1,:)); hold on;
 plot(connectionThresholds, percentSuccess(2,:), '--'); grid on;
 
 
-%% plot frequencychange over simstep
-clc
-size(states(:,:,:))
-
-for i=1:size(states(:,:,:),2)
-    plot(linspace(1,size(states(:,:,:),1),size(states(:,:,:),1)),states(:,i,6))
-    hold on
-end
-
 
