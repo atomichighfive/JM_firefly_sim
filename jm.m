@@ -1,18 +1,19 @@
 %% Generate spherical flock
 clear all;
 
-flockRadius = 4; % Radius of spherical flock
+flockRadius = 5; % Radius of spherical flock
 flockDensity = 0.2; % Density of generated flock
 connectionThreshold = 2; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
-thau = 0.0; % fraction of period to go blind after flashing
+thau = 0.051; % fraction of period to go blind after flashing
+delta = 0.025; % Delay for a pulse to transmit to its neighbours
 
 Qinit = sphereFlock(flockRadius, flockDensity);
 [Q, G] = calculateGraph(Qinit, connectionThreshold);
 
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
-Q(:,6) = 1+0.5*rand(N,1);
+Q(:,6) = 1+0.3*rand(N,1);
 Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
@@ -35,10 +36,10 @@ graphMetrics(G);
 clear states
 clear flashes
 
-dt = 1*10^-4;
-time = 4;
+dt = 1*10^-3;
+time = 30;
 
-[states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta);
+[states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta, delta);
 
 % print results
 synchronyLimit = 0.85;
@@ -83,7 +84,7 @@ legend(legendStrings, 'Location', 'southeast'); % Draw legend
 
 %% Utvärdera resultat
 synchronyLimit = 0.95;
-timeTolerance = [-0.01, 0.01];
+timeTolerance = [-0.05, 0.05];
 
 [ synchronyTime, avgFlashesToSync, averageSynchronyLevel ] = evaluateSynchrony( states, flashes, dt, synchronyLimit, timeTolerance );
 
@@ -96,6 +97,12 @@ disp(['Average flashes before synchrony: ', num2str(avgFlashesToSync)]);
 disp(['Level of synchrony reached: ', num2str(averageSynchronyLevel)]);
 disp(['Best synchrony level reached: ', num2str(bestSynchronyLevel)]);
 
+%% Panelplot av frekvenser
+for i=1:N
+    plot(states(:,i,6)); hold on;
+end
+grid on    
+
 %% Tillståndsevolution
 showStateEvolution(states, dt, 1, false);
 
@@ -107,7 +114,7 @@ showSimulation(states, flashes, dt, 0.1, false, false);
 
 %% Visa en flugas detalierade tillstånd
 figure()
-fly = 7;
+fly = 5;
 plotFlyDetailed(states, flashes, dt, fly, true);
 grid on;
 xlabel('tid');

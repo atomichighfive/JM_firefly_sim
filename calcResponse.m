@@ -10,7 +10,7 @@ function [p,f,listening] = calcResponse(phase,freq, thau)
     alpha = 0.5;
     beta = 0.5;
     gamma = 0.05; 
-    a = 0.1;
+    a = 0.25;
     b = 0.25;
     
     
