@@ -222,9 +222,9 @@ yyaxis('left')
 plot(connectionThresholds, avgTrueSynchronyLevelResult(:, 1));
 plot(connectionThresholds, avgTrueSynchronyLevelResult(:, 2), '--'); grid on;
 ylabel('synkroniseringsgrad')
-xlabel('kopplingsavst??nd')
+xlabel('kopplingsavst?nd')
 legend('\xi = 0','\xi = 0.1','medelantal flugor', 'Location', 'southeast');
-title('Synkroniseringsgrad m.a.p kopplingsavst??nd');
+title('Synkroniseringsgrad m.a.p kopplingsavst?nd');
 
 f2 = figure()
 A = averageConnections(:,:,:,:,:,:,:,1);
@@ -254,7 +254,7 @@ plot(lim, [a, a], 'blue--');
 plot(lim, [b, b], 'red--');
 xlabel('medelantal kopplingar per oscillator');
 ylabel('slutgiltig medelfrekvens');
-legend('\xi = 0', '\xi = 0.1', 'medel f??r \xi = 0', 'medel f??r \xi = 0.1', 'Location', 'southeast');
+legend('\xi = 0', '\xi = 0.1', 'medel f?r \xi = 0', 'medel f??r \xi = 0.1', 'Location', 'southeast');
 title('Utfall av slutfrekvens m.a.p antal kopplingar');
 %% Percent success with 20 connection thresholds, 2 thaus and 25 iterations
 
