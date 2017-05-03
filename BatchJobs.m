@@ -12,10 +12,19 @@ save(['output/simulations/', char(name)]);
 
 % Parameters
 clear all;
+name='freq(0,1.2,4)';
 
+
+dir_save= ['output/simulations/', name,'/'];
+dir_pics=[dir_save,'pics'];
+if exist(dir_save,'dir')==7
+    error('A simulation with that name already exist');  
+end
+mkdir('output/simulations', name);
+mkdir(dir_pics);
 % immutable
 dt = 1*10^-3;
-time = 6;
+time = 10;
 baseFrequency = 1;
 findTrueSynchronyLevel = 1; % Use slow binary search to find actual synchronization level
 
@@ -24,20 +33,21 @@ timeTolerance = [-0.01, 0.01];
 
 % variable
     % flock
-numberOfIterations = 10;
-frequencySpreads = 1;
+numberOfIterations = 1;
+frequencySpreads = linspace(0,1.2,4);
 phaseSpreads = 1;
-flockRadi = 5; % Radius of spherical flock
-flockDensities = 0.2; % Density of generated flock
+flockRadi = 4; % Radius of spherical flock
+flockDensities = 0.3; % Density of generated flock
 
     % flies
 connectionThresholds = 2.5; % Distance flys can see eachother
 
     % fly
-deltas = [0, 0.075];
+deltas = [0];
 zetas = 0.05; % fraction of period to go blind after seeing a flash
 thaus = [0]; % fraction of period to go blind after flashing
 
+legend=frequencySpreads;
 
 synchronyTime = zeros([ ...
     size(frequencySpreads, 2), ...
@@ -62,7 +72,8 @@ if findTrueSynchronyLevel
 end
 
 
-evaluations = prod(size(synchronyTime));    % Ammount of calculations needed
+%evaluations = prod(size(synchronyTime));    % Ammount of calculations needed
+evaluations = numel(synchronyTime);
 counter = 0;    % Keep track of calculations done
 progressBar = waitbar(0, [num2str(counter), '/', num2str(evaluations)]);
 tic; % Initialize update timer
@@ -95,10 +106,18 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
                                     delta = deltas(deltaIndex);
                                 
                                     % Simulate
+
                                     clear states; clear flashes; % Free up some memory
                                     [states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta, delta);
-
-                                    % evsluate
+                                    
+                                    %save
+                                    date_time = datetime;
+                                    %name=yyyymmdd(date_time);
+                                    %mkdir output/simulations
+                                    
+                                    save([dir_save,[name,num2str(counter,'%03d') '.mat'] ],'states');
+                                   
+                                    % evaluate
 
                                     if findTrueSynchronyLevel
                                         % Determine best level of synchrony
@@ -230,9 +249,9 @@ yyaxis('left')
 plot(connectionThresholds, avgTrueSynchronyLevelResult(:, 1));
 plot(connectionThresholds, avgTrueSynchronyLevelResult(:, 2), '--'); grid on;
 ylabel('synkroniseringsgrad')
-xlabel('kopplingsavstånd')
+xlabel('kopplingsavst??nd')
 legend('\xi = 0','\xi = 0.1','medelantal flugor', 'Location', 'southeast');
-title('Synkroniseringsgrad m.a.p kopplingsavstånd');
+title('Synkroniseringsgrad m.a.p kopplingsavst??nd');
 
 f2 = figure()
 A = averageConnections(:,:,:,:,:,:,:,1);
@@ -262,7 +281,7 @@ plot(lim, [a, a], 'blue--');
 plot(lim, [b, b], 'red--');
 xlabel('medelantal kopplingar per oscillator');
 ylabel('slutgiltig medelfrekvens');
-legend('\xi = 0', '\xi = 0.1', 'medel för \xi = 0', 'medel för \xi = 0.1', 'Location', 'southeast');
+legend('\xi = 0', '\xi = 0.1', 'medel f??r \xi = 0', 'medel f??r \xi = 0.1', 'Location', 'southeast');
 title('Utfall av slutfrekvens m.a.p antal kopplingar');
 %% Percent success with 20 connection thresholds, 2 thaus and 25 iterations
 
@@ -277,3 +296,33 @@ percentSuccess = numberOfOk/25;
 
 plot(connectionThresholds, percentSuccess(1,:)); hold on;
 plot(connectionThresholds, percentSuccess(2,:), '--'); grid on;
+
+
+
+ 
+%% funkar bara f?r mig
+
+name='freq(0,1.2,4)';
+colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w'];
+% G? in i sparade simuleringar
+cd_str=['~/Documents/JM_Firefly_Sim/output/simulations/',name];
+if exist(cd_str, 'dir') == 7
+    cd(cd_str);
+    %lista simuleringar
+    a=dir;
+    a(3).name;
+    % (. .. sim1 sim2 sim3) i dir
+    for i=0:size(a,1)-4
+        if exist(cd_str, 'dir') == 7
+            cd(cd_str);
+        end
+        load([name num2str(i,'%03d') '.mat'])
+        cd ..
+        plotFrequencyChange(states, colors, i)
+    end
+    cd_pics_str=[cd_str,'/pics'];
+    cd(cd_pics_str);
+    print(name,'-depsc','-r200');
+    %ut till r?tt dir
+    cd ../../../..
+end
