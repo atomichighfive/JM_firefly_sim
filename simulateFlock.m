@@ -1,4 +1,4 @@
-function [ states, flashes ] = simulateFlock( Q, G, time, dt, thau, zeta, delta )
+function [ states, flashes ] = simulateFlock( Q, G, time, dt, thau, zeta, delta, alpha, beta, gamma, a, b)
 %SIMULATEFLOCK Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -19,7 +19,7 @@ function [ states, flashes ] = simulateFlock( Q, G, time, dt, thau, zeta, delta 
         Qn = Q;
         for i=1:N
             if Qn(i,5) >= 1
-                [Qn, flashes] = doFlash(t, i, Qn, states, flashes, G, thau, zeta, delaysteps);
+                [Qn, flashes] = doFlash(t, i, Qn, states, flashes, G, thau, zeta, delaysteps, alpha, beta, gamma, a, b);
             end
             if delaysteps > 0
                 neig = neighbors(G,i);
@@ -27,7 +27,7 @@ function [ states, flashes ] = simulateFlock( Q, G, time, dt, thau, zeta, delta 
                     flyIndex = neig(j);
                     flashesArrivedFromJ = flashesArrived(flashesArrived(:,end-1) == flyIndex, :);
                     for k = 1:size(flashesArrivedFromJ,1)
-                        [p, f, listening] = calcResponse(Qn(i,5), Qn(i,6), thau);
+                        [p, f, listening] = calcResponse(Qn(i,5), Qn(i,6), thau, alpha, beta, gamma, a, b);
                         if Qn(i, 7) <= 0;                    
                             Qn(i,5) = p;
                             Qn(i,6) = f;

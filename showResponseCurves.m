@@ -1,7 +1,8 @@
-function [ ] = showResponseCurves( thau )
+function [ ] = showResponseCurves( thau,alpha,beta,gamma,a,b )
 %SHOWRESPONSECURVES Summary of this function goes here
 %   Detailed explanation goes here
-    fig = figure();
+    fig = figure('Name',char(datetime));
+    figure(fig);
     maxsamples = 1000;
     samples = ceil(sqrt(maxsamples));
     
@@ -11,7 +12,7 @@ function [ ] = showResponseCurves( thau )
     [XX,YY] = meshgrid(X,Y);
     for i = 1:samples
         for j = 1:samples
-            [p,f,l] = calcResponse(XX(i,j), YY(i,j), thau);
+            [p,f,l] = calcResponse(XX(i,j), YY(i,j), thau,alpha,beta,gamma,a,b);
             Z(i,j,:) = [p,f,l];
         end
     end
@@ -21,7 +22,7 @@ function [ ] = showResponseCurves( thau )
     u = linspace(0,1,maxsamples);
     for i=1:maxsamples
         U(i) = u(i);
-        [p,f,l] = calcResponse(u(i),1, thau);
+        [p,f,l] = calcResponse(u(i),1, thau,alpha,beta,gamma,a,b);
         V(i,:) = [p,f,l];
     end
     
@@ -59,6 +60,6 @@ function [ ] = showResponseCurves( thau )
     ylabel('ny frekvens');
     title('frekvenssvar');
     grid on;
-    %title('Svar för f=1')
+    %title('Svar f??r f=1')
 end
 
