@@ -2,7 +2,15 @@ function [ ] = plotFreqVariableParam( name )
 %plotFreqVariableParam, plot frequency change for oscillators with
 %different parameters from .mat files in directory 'name'
 
-%   Order of color, can't get legend to work
+
+% TODO:
+% Need to manually cd_str to directory where JM_Firefly exist.
+% JM_Firefly_Sim/output/simulations must exist
+% Get legend to work
+
+
+
+%   Order of color
 colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w'];
 % Change directory to 'name'
 cd_str=['~/Documents/JM_Firefly_Sim/output/simulations/',name];
