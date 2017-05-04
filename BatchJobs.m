@@ -330,5 +330,6 @@ plot(connectionThresholds, percentSuccess(2,:), '--'); grid on;
 
  
 %% funkar bara f?r mig
+close all
 %colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w'];
 plotFreqVariableParam('beta(0.3,0.6,6)')
