@@ -15,7 +15,7 @@ save(['output/simulations/', char(name)]);
 
 % Parameters
 clear;
-name='responsecurve';  % Name of simulation
+name='alpha(0.4,0.6,5)';  % Name of simulation
 
 %Make dir+dir for plots, stop if simulation exist
 dir_save= ['output/simulations/', name,'/'];
@@ -29,7 +29,7 @@ mkdir(dir_pics);
 
 %Simulation variables
 dt = 1*10^-3;
-time = 10;
+time = 6;
 findTrueSynchronyLevel = 1; % Use slow binary search to find actual synchronization level
 synchronyLimit = 0.85;
 timeTolerance = [-0.01, 0.01];
@@ -38,11 +38,11 @@ numberOfIterations = 1;
 % Variables
 
 %Responsecurve
-alphas = [0.5,0.25];
-betas = linspace(0.3,0.6,2);
-gammas = [0.05, 0.1];
-as = [0.25, 0.1];
-bs = [0.25, 0.1];
+alphas = linspace(0.4,0.6,5);
+betas = 0.5;
+gammas = 0.05;
+as = 0.25;
+bs = 0.5;
 
 
 
@@ -55,7 +55,7 @@ connectionThresholds = 2.5; % Distance flys can see eachother
 
 % fly
 baseFrequency = 1; % base frequency of a oscillator
-deltas = [0];
+deltas = [0];  % Time delay
 zetas = 0.05; % fraction of period to go blind after seeing a flash
 thaus = [0]; % fraction of period to go blind after flashing
 
@@ -369,9 +369,9 @@ plot(connectionThresholds, percentSuccess(2,:), '--'); grid on;
 
 
 %% funkar bara f?r mig
-
-%colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w'];
-plotFreqVariableParam('responsecurve')
+close all
+%colors=['b', 'r', 'y', 'k', 'g', 'm', 'c'];
+plotFreqVariableParam('alpha(0.25,0.5,5)')
 
 
 
