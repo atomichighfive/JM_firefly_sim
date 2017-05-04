@@ -25,7 +25,7 @@ if exist(cd_str, 'dir') == 7
             cd(cd_str);
         end
         load([name num2str(i,'%03d') '.mat'])
-        cd ..
+        cd ../../..
         plotFrequencyChange(states, colors, i)
     end
        

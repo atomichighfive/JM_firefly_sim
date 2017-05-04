@@ -11,7 +11,9 @@ save(['output/simulations/', char(name)]);
 %% Batch simulate
 
 %TODO
-%flytta utt zeta, theta, delta looparna s? iterationer ?r innerst
+%
+%
+
 
 % Parameters
 clear;
@@ -371,7 +373,7 @@ plot(connectionThresholds, percentSuccess(2,:), '--'); grid on;
 %% funkar bara f?r mig
 close all
 %colors=['b', 'r', 'y', 'k', 'g', 'm', 'c'];
-plotFreqVariableParam('alpha(0.25,0.5,5)')
+plotFreqVariableParam('alpha(0.4,0.6,5)')
 
 
 
