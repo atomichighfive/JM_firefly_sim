@@ -1,4 +1,4 @@
-function [p,f,listening] = calcResponse(phase,freq, thau)
+function [p,f,listening] = calcResponse(phase,freq, thau, alpha, beta, gamma, a, b)
 % CALCRESPONSE
 % Calculates new phase and frequency if event triggers. If recently
 % triggered, no calculation will occur.
@@ -7,11 +7,11 @@ function [p,f,listening] = calcResponse(phase,freq, thau)
 %                listening: 0 if false, 1 if true
 % Parameters:    phase: current phase
 %                freq: current frequenc
-    alpha = 0.5;
-    beta = 0.5;
-    gamma = 0.05; 
-    a = 0.25;
-    b = 0.25;
+   % alpha = 0.5;
+   % beta = 0.5;
+   % gamma = 0.05; 
+  %  a = 0.25;
+ %   b = 0.25;
     
     
     if thau < phase && phase < 1
