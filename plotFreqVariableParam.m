@@ -10,7 +10,7 @@ function [ ] = plotFreqVariableParam( name )
 
 
 %   Order of color
-colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w'];
+colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w','b', 'r', 'y', 'k', 'g', 'm', 'c', 'w',];
 % Change directory to 'name'
 cd_str=['~/Documents/JM_Firefly_Sim/output/simulations/',name];
 if exist(cd_str, 'dir') == 7
