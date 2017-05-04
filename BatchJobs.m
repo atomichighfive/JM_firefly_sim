@@ -106,7 +106,7 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
             for flockDensityIndex = 1:size(flockDensities,2)
                 flockDensity = flockDensities(flockDensityIndex);
                 
-                %klistra in h?r
+                
                 for iteration = 1:numberOfIterations
                     % Generate flock
                     Qinit = sphereFlock(flockRadius, flockDensity);
@@ -119,7 +119,7 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
                         connectionThreshold = connectionThresholds(connectionThresholdIndex);
                         
                         [Q, G] = calculateGraph(Qinit, connectionThreshold);
-                        % flytta ut n?gra sn?pp
+                        
                         for zetaIndex = 1:size(zetas, 2)
                             zeta = zetas(zetaIndex);
                             for thauIndex = 1:size(thaus, 2)
