@@ -10,9 +10,12 @@ mkdir output simulations;
 save(['output/simulations/', char(name)]);
 %% Batch simulate
 
+%TODO
+%flytta utt zeta, theta, delta looparna s? iterationer ?r innerst
+
 % Parameters
-clear all;
-name='beta(0.3,0.6,6)';  % Name of simulation
+clear;
+name='beta(0.3,0.6,7)3';  % Name of simulation
 
 %Make dir+dir for plots, stop if simulation exist
 dir_save= ['output/simulations/', name,'/'];
@@ -36,7 +39,7 @@ numberOfIterations = 1;
     
     %Responsecurve
     alphas = 0.5;
-    betas = linspace(0.3,0.6,6);
+    betas = linspace(0.3,0.6,7);
     gammas = 0.05; 
     as = 0.25;
     bs = 0.25;    
@@ -123,7 +126,7 @@ for frequencySpreadIndex = 1:size(frequencySpreads, 2)
                                            connectionThreshold = connectionThresholds(connectionThresholdIndex);
                                            
                                            [Q, G] = calculateGraph(Qinit, connectionThreshold);
-                                           
+                                           % flytta ut n?gra sn?pp
                                            for zetaIndex = 1:size(zetas, 2)
                                                zeta = zetas(zetaIndex);
                                                for thauIndex = 1:size(thaus, 2)
@@ -330,6 +333,14 @@ plot(connectionThresholds, percentSuccess(2,:), '--'); grid on;
 
  
 %% funkar bara f?r mig
-close all
+
 %colors=['b', 'r', 'y', 'k', 'g', 'm', 'c', 'w'];
-plotFreqVariableParam('beta(0.3,0.6,6)')
+plotFreqVariableParam('beta(0.3,0.6,7)')
+
+
+
+
+
+
+
+

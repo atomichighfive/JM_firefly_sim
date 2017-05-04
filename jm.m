@@ -7,11 +7,15 @@ connectionThreshold = 2; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
 thau = 0.051; % fraction of period to go blind after flashing
 delta = 0.025; % Delay for a pulse to transmit to its neighbours
-alpha = 0.5;
+
+%Response curve paramaters
+alpha = 0.5; 
 beta = 0.5;
 gamma = 0.05;
 a = 0.25;
 b = 0.25;
+
+%create flock
 Qinit = sphereFlock(flockRadius, flockDensity);
 [Q, G] = calculateGraph(Qinit, connectionThreshold);
 
@@ -62,6 +66,7 @@ graphMetrics(G);
 plotFlock(Q, G);
 
 %% Show response curves
+
 showResponseCurves(thau,alpha,beta,gamma,a,b);
 
 %% Tidsserie
@@ -102,6 +107,8 @@ disp(['Level of synchrony reached: ', num2str(averageSynchronyLevel)]);
 disp(['Best synchrony level reached: ', num2str(bestSynchronyLevel)]);
 
 %% Panelplot av frekvenser
+date=datetime;
+figure('Name',char(date))
 for i=1:N
     plot(states(:,i,6)); hold on;
 end
@@ -117,7 +124,7 @@ showCircularStateEvolution(states, dt, 0.25, false);
 showSimulation(states, flashes, dt, 0.1, false, false);
 
 %% Visa en flugas detalierade tillst??nd
-figure()
+figure('Name', char(datetime))
 fly = 5;
 plotFlyDetailed(states, flashes, dt, fly, true);
 grid on;

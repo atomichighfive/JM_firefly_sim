@@ -1,7 +1,8 @@
 function [ ] = showResponseCurves( thau,alpha,beta,gamma,a,b )
 %SHOWRESPONSECURVES Summary of this function goes here
 %   Detailed explanation goes here
-    fig = figure();
+    fig = figure('Name',char(datetime));
+    figure(fig);
     maxsamples = 1000;
     samples = ceil(sqrt(maxsamples));
     
