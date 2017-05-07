@@ -1,12 +1,12 @@
 %% Generate spherical flock
 clear all;
 
-flockRadius = 5; % Radius of spherical flock
-flockDensity = 0.2; % Density of generated flock
-connectionThreshold = 2; % Distance flys can see eachother
+flockRadius = 2*pi; % Radius of spherical flock
+flockDensity = 0.1; % Density of generated flock
+connectionThreshold = 2.75; % Distance flys can see eachother
 zeta = 0.05; % fraction of period to go blind after seeing a flash
-thau = 0.051; % fraction of period to go blind after flashing
-delta = 0.025; % Delay for a pulse to transmit to its neighbours
+thau = 0.0; % fraction of period to go blind after flashing
+delta = 0.0; % Delay for a pulse to transmit to its neighbours
 
 %Response curve paramaters
 alpha = 0.5; 
@@ -21,7 +21,7 @@ Qinit = sphereFlock(flockRadius, flockDensity);
 
 N = size(Q, 1);
 Q(:,5) = 1*rand(N,1);
-Q(:,6) = 1+0.3*rand(N,1);
+Q(:,6) = 1+0.25*rand(N,1);
 Q(:,7) = zeros(N,1);
 
 graphMetrics(G);
@@ -45,7 +45,7 @@ clear states
 clear flashes
 
 dt = 1*10^-3;
-time = 3;
+time = 6;
 
 [states, flashes] = simulateFlock(Q, G, time, dt, thau, zeta, delta, alpha, beta, gamma, a, b);
 
@@ -110,7 +110,8 @@ disp(['Best synchrony level reached: ', num2str(bestSynchronyLevel)]);
 date=datetime;
 figure('Name',char(date))
 for i=1:N
-    plot(states(:,i,6)); hold on;
+    x = linspace(0,time,size(states, 1));
+    plot(x, states(:,i,6)); hold on;
 end
 grid on    
 
