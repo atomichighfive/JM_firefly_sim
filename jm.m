@@ -115,7 +115,8 @@ grid on;
 date=datetime;
 figure('Name',char(date))
 for i=1:N
-    plot(states(:,i,6)); hold on;
+    x = linspace(0,time,size(states, 1));
+    plot(x, states(:,i,6)); hold on;
 end
 grid on    
 
